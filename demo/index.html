@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>bigger player</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <video src="/material/video.mp4"
+           controls="controls"
+           width="360"
+           height="240"
+           class="bigger-player">
+    </video>
+</div>
+<script src="/build/player.js"></script>
+</body>
+</html>
