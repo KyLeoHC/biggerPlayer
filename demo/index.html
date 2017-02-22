@@ -18,13 +18,17 @@
 </head>
 <body>
 <div class="container">
-    <video src="/material/video.mp4"
-           controls="controls"
+    <video id="player"
+           src="/material/video.mp4"
            width="360"
-           height="240"
-           class="bigger-player">
+           height="240">
     </video>
 </div>
 <script src="/build/player.js"></script>
+<script type="text/javascript">
+    var player = new BiggerPlayer({
+        selector: '#player'
+    });
+</script>
 </body>
 </html>
