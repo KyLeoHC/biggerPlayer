@@ -8,8 +8,8 @@ baseConfig.output = {
     filename: '[name].min.js'
 };
 baseConfig.module.rules.push({
-    test: /\.css$/,
-    use: ExtractTextPlugin.extract(['css-loader', 'postcss-loader'])
+    test: /\.less/,
+    use: ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'less-loader'])
 });
 baseConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({

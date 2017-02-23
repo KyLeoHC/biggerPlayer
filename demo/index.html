@@ -8,20 +8,24 @@
         html, body {
             margin: 0;
             height: 100%;
+            background-color: #e8e8e8;
         }
 
         .container {
             display: flex;
             justify-content: center;
         }
+
+        .bigger-player {
+            margin-top: 50px;
+            width: 360px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <video id="player"
-           src="/material/video.mp4"
-           width="360"
-           height="240">
+           src="/material/video.mp4">
     </video>
 </div>
 <script src="/build/player.js"></script>

@@ -8,11 +8,12 @@ baseConfig.output = {
     filename: '[name].js'
 };
 baseConfig.module.rules.push({
-    test: /\.css$/,
+    test: /\.less/,
     use: [
         {loader: 'style-loader'},
         {loader: 'css-loader'},
-        {loader: 'postcss-loader'}
+        {loader: 'postcss-loader'},
+        {loader: 'less-loader'}
     ]
 });
 baseConfig.devServer = {
