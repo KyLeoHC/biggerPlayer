@@ -26,6 +26,7 @@ class Player {
                     <div class="control-center">
                         <div class="time-bar">
                             <div class="current-time"></div>
+                            <div class="cache-time"></div>
                         </div>
                         <div class="time-text">
                             <span class="current">00:00</span>
@@ -43,6 +44,7 @@ class Player {
         this.el = previousEl;
         this.startBtnEl = dom.query('.start-btn', this.el)[0];
         this.currentTimeEl = dom.query('.current-time', this.el)[0];
+        this.cacheTimeEl = dom.query('.cache-time', this.el)[0];
         this.timeTextCurrentEl = dom.query('.current', this.el)[0];
         this.timeTextDurationEl = dom.query('.duration', this.el)[0];
     }
@@ -52,13 +54,32 @@ class Player {
             this.toggle();
         }, false);
 
+        this.videoEl.addEventListener('durationchange', (event) => {
+            this._initDuration();
+            console.log('durationchange', event);
+        }, false);
+
         this.videoEl.addEventListener('loadedmetadata', (event) => {
             this._initDuration();
             console.log('loadedmetadata', event);
         }, false);
 
+        this.videoEl.addEventListener('canplay', (event) => {
+            //this._initDuration();
+            console.log('canplay', event);
+        }, false);
+
         this.videoEl.addEventListener('progress', (event) => {
+            let cacheRanges = this.videoEl.buffered;
+            this.cacheTimeEl.style.width = cacheRanges.end(cacheRanges.length - 1) / this.duration * 100 + '%';
+
             console.log('progress', event);
+        }, false);
+
+        this.videoEl.addEventListener('loadeddata', (event) => {
+            let cacheRanges = this.videoEl.buffered;
+            this.cacheTimeEl.style.width = cacheRanges.end(cacheRanges.length - 1) / this.duration * 100 + '%';
+            console.log('loadeddata', cacheRanges);
         }, false);
 
         this.videoEl.addEventListener('waiting', (event) => {
@@ -77,6 +98,9 @@ class Player {
         }, false);
 
         this.videoEl.addEventListener('ended', (event) => {
+            this.isPlaying = false;
+            this.el.classList.add('pause');
+            this.startBtnEl.innerText = '开始';
             console.log('ended', event);
         }, false);
     }
@@ -128,7 +152,7 @@ class Player {
     }
 
     play() {
-        if (this.isPlaying) return;
+        if (this.isPlaying || this.videoEl.readyState === 0) return;
         if (!this.duration) {
             this._initDuration();
         }
